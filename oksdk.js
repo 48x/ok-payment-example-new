@@ -274,13 +274,15 @@
     }
 
     function closePaymentFrame(frameId) {
-        var frameContainer = window.parent.document.getElementById(frameId);
-        if (frameContainer) {
-            frameContainer.innerHTML = '';
-            frameContainer.style.display = "none";
-            frameContainer.style.position = "";
-            frameContainer.style.width = "";
-            frameContainer.style.height = "";
+        if (window.parent) {
+            var frameContainer = window.parent.document.getElementById(frameId);
+            if (frameContainer) {
+                frameContainer.innerHTML = '';
+                frameContainer.style.display = "none";
+                frameContainer.style.position = "";
+                frameContainer.style.width = "";
+                frameContainer.style.height = "";
+            }
         }
     }
 
