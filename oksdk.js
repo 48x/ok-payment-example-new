@@ -264,8 +264,11 @@
         + query
         + "'; width='100%' height='100%' frameborder='0'></iframe>";
         var element = window.document.getElementById(frameId);
-        element.innerHTML = frameElement;
-        element.style.display = 'block';
+        if (element) {
+            element.innerHTML = frameElement;
+            element.style.display = 'block';
+        }
+
     }
 
     function closePaymentFrame(frameId) {
