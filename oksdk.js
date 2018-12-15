@@ -263,10 +263,10 @@
         "<iframe 'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
         + query
         + "'; width='100%' height='100%' frameborder='0'></iframe>";
-        var containerElement = window.document.getElementById(frameId);
-        if (containerElement) {
-            containerElement.innerHTML = frameElement;
-            containerElement.style.position = "absolute";
+        var frameContainer = window.document.getElementById(frameId);
+        if (frameContainer) {
+            frameContainer.innerHTML = frameElement;
+            frameContainer.style.position = "absolute";
         }
     }
 
