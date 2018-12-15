@@ -266,7 +266,7 @@
         var containerElement = window.document.getElementById(frameId);
         if (containerElement) {
             containerElement.innerHTML = frameElement;
-            containerElement.style.display = '';
+            frameContainer.style.position = "fixed";
         }
     }
 
