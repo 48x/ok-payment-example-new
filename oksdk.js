@@ -260,7 +260,7 @@
     function paymentShowInFrame(productName, productPrice, productCode, options, frameId) {
         var query = getPaymentQuery(productName, productPrice, productCode, options);
         var frameElement =
-        "'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
+        "<iframe 'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
         + query
         + "'; width='100%' height='100%' frameborder='0'></iframe>";
         var containerElement = window.document.getElementById(frameId);
