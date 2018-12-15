@@ -264,7 +264,7 @@
         + query
         + "'; width='100%' height='100%' frameborder='0'></iframe>"
         element = document.getElementById(frameId);
-        element.innerHTML = frame;
+        element.innerHTML = frameElement;
         element.style.display = 'block';
     }
 
