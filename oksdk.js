@@ -266,7 +266,7 @@
         var containerElement = window.document.getElementById(frameId);
         if (containerElement) {
             containerElement.innerHTML = frameElement;
-            frameContainer.style.position = "fixed";
+            frameContainer.style.position = "absolute";
         }
     }
 
