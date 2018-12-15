@@ -272,9 +272,12 @@
     }
 
     function closePaymentFrame(frameId) {
-        var frameElement = window.parent.document.getElementById('iframe');
-        frameElement.innerHTML = '';
-        frameElement.style.display = "none";
+        var frameElement = window.parent.document.getElementById(frameId);
+        if (frameElement) {
+            frameElement.innerHTML = '';
+            frameElement.style.display = "none";
+        }
+
     }
 
     /**
