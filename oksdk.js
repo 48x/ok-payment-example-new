@@ -263,7 +263,7 @@
         "'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
         + query
         + "'; width='100%' height='100%' frameborder='0'></iframe>";
-        element = window.document.getElementById(frameId);
+        var element = window.document.getElementById(frameId);
         element.innerHTML = frameElement;
         element.style.display = 'block';
     }
