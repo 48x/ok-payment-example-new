@@ -263,21 +263,19 @@
         "'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
         + query
         + "'; width='100%' height='100%' frameborder='0'></iframe>";
-        var element = window.document.getElementById(frameId);
-        if (element) {
-            element.innerHTML = frameElement;
-            element.style.display = 'block';
+        var containerElement = window.document.getElementById(frameId);
+        if (containerElement) {
+            containerElement.innerHTML = frameElement;
+            containerElement.style.display = 'block';
         }
-
     }
 
     function closePaymentFrame(frameId) {
-        var frameElement = window.parent.document.getElementById(frameId);
-        if (frameElement) {
-            frameElement.innerHTML = '';
-            frameElement.style.display = "none";
+        var frameContainer = window.parent.document.getElementById(frameId);
+        if (frameContainer) {
+            frameContainer.innerHTML = '';
+            frameContainer.style.display = "none";
         }
-
     }
 
     /**
