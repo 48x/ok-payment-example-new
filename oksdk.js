@@ -258,7 +258,7 @@
      * Opens a payment window for a selected product in an embedded iframe
      */
     function paymentShowInFrame(productName, productPrice, productCode, options, frameId) {
-        var query = window.open(getPaymentQuery(productName, productPrice, productCode, options));
+        var query = getPaymentQuery(productName, productPrice, productCode, options);
         var frameElement =
         "'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
         + query
