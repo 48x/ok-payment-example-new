@@ -268,6 +268,8 @@
             frameContainer.innerHTML = frameElement;
             frameContainer.style.display = "block";
             frameContainer.style.position = "fixed";
+            frameContainer.style.width = "100%";
+            frameContainer.style.height = "100%";
         }
     }
 
@@ -276,6 +278,9 @@
         if (frameContainer) {
             frameContainer.innerHTML = '';
             frameContainer.style.display = "none";
+            frameContainer.style.position = "";
+            frameContainer.style.width = "";
+            frameContainer.style.height = "";
         }
     }
 
