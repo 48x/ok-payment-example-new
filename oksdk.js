@@ -258,9 +258,10 @@
      * Opens a payment window for a selected product in an embedded iframe
      */
     function paymentShowInFrame(productName, productPrice, productCode, options, frameId) {
-        var frameElement = window.document.createElement("frame");
-        frameElement.style = "position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999; width: 100%; height: 100%";
-        frameElement.src = getPaymentQuery(productName, productPrice, productCode, options);
+        var frameElement =
+        "<iframe 'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
+        + getPaymentQuery(productName, productPrice, productCode, options)
+        + "'; width='100%' height='100%' frameborder='0'></iframe>";
 
         var frameContainer = window.document.getElementById(frameId);
         if (!frameContainer) {
@@ -269,7 +270,7 @@
             document.body.appendChild(frameElement);
         }
 
-        frameContainer.appendChild(frameElement);
+        frameContainer.innerHTML = frameElement;
         frameContainer.style.display = "block";
         frameContainer.style.position = "fixed";
         frameContainer.style.width = "100%";
