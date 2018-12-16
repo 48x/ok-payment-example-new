@@ -267,7 +267,7 @@
         if (!frameContainer) {
             frameContainer = window.document.createElement("div")
             frameContainer.id = frameId;
-            document.body.appendChild(frameElement);
+            document.body.appendChild(frameContainer);
         }
 
         frameContainer.innerHTML = frameElement;
