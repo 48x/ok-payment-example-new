@@ -286,6 +286,8 @@
                 frameContainer.innerHTML = '';
                 frameContainer.style.display = "none";
                 frameContainer.style.position = "";
+                frameContainer.style.left = "";
+                frameContainer.style.top = "";
                 frameContainer.style.width = "";
                 frameContainer.style.height = "";
             }
