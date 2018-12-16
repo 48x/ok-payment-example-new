@@ -272,7 +272,7 @@
             document.body.appendChild(frameElement);
         }
 
-        frameContainer.innerHTML = frameElement.outerHtml;
+        frameContainer.appendChild(frameElement);
         frameContainer.style.display = "block";
         frameContainer.style.position = "fixed";
         frameContainer.style.width = "100%";
