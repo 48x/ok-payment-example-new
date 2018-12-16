@@ -273,6 +273,8 @@
         frameContainer.innerHTML = frameElement;
         frameContainer.style.display = "block";
         frameContainer.style.position = "fixed";
+        frameContainer.style.left = "0px";
+        frameContainer.style.top = "0px";
         frameContainer.style.width = "100%";
         frameContainer.style.height = "100%";
     }
