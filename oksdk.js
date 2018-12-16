@@ -259,13 +259,24 @@
      */
     function paymentShowInFrame(productName, productPrice, productCode, options, frameId) {
         var frameElement = window.document.createElement("frame");
-        frameElement.id = frameId;
         frameElement.style = "position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;";
         frameElement.src = getPaymentQuery(productName, productPrice, productCode, options);
         frameElement.width = "100%";
         frameElement.height = "100%";
         frameElement.frameborder = "0";
-        document.body.appendChild(frameElement);
+
+        var frameContainer = window.document.getElementById(frameId);
+        if (!frameContainer) {
+            frameContainer = window.document.createElement("div")
+            frameContainer.id = frameId;
+            document.body.appendChild(frameElement);
+        }
+
+        frameContainer.innerHTML = frameElement;
+        frameContainer.style.display = "block";
+        frameContainer.style.position = "fixed";
+        frameContainer.style.width = "100%";
+        frameContainer.style.height = "100%";
     }
 
     function closePaymentFrame(frameId) {
