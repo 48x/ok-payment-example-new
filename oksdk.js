@@ -259,11 +259,8 @@
      */
     function paymentShowInFrame(productName, productPrice, productCode, options, frameId) {
         var frameElement = window.document.createElement("frame");
-        frameElement.style = "position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;";
+        frameElement.style = "position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999; width: 100%; height: 100%";
         frameElement.src = getPaymentQuery(productName, productPrice, productCode, options);
-        frameElement.width = "100%";
-        frameElement.height = "100%";
-        frameElement.frameborder = "0";
 
         var frameContainer = window.document.getElementById(frameId);
         if (!frameContainer) {
