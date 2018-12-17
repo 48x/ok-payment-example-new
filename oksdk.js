@@ -638,7 +638,7 @@
     function isLaunchedInOKAndroidWebView() {
         var userAgent = window.navigator.userAgent;
 
-        return (userAgent && userAgent.length >= 0 && userAgent.indexOf(OK_ANDROID_APP_UA));
+        return (userAgent && userAgent.length >= 0 && userAgent.indexOf(OK_ANDROID_APP_UA) > -1);
     }
 
     /** stub func */
