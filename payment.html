@@ -69,11 +69,12 @@
                 OKSDK.Payment.closePaymentFrame("paymentFrame");
             }
 
-            if (OKSDK.Util.isLaunchedFromOKApp()) {
+            if (window.opener) {
                     // Post a message {type:"payment",result:"..."}
                     window.opener.postMessage(JSON.stringify({
                         type: 'payment',
-                        result: paymentResult
+                        result: paymentResult,
+                        fromAndroid: OKSDK.Util.isLaunchedFromOKApp()
                     }), "*");
                     window.close();
                     return;
