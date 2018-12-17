@@ -90,7 +90,8 @@
         // Receive a message {type:"payment",result:"..."}
         if (data.type == 'payment') {
             let paymentResult = data.result;
-            alert('Payment returned result ' + JSON.stringify(paymentResult));
+            let fromAndroid = data.fromAndroid;
+            alert('Payment returned result: ' + JSON.stringify(paymentResult) + '\n' + 'From android: ' JSON.stringify(fromAndroid));
         }
     }, false);
 </script>
