@@ -66,7 +66,13 @@
             let paymentResult = decodeURIComponent(args['custom_args']).split('=');
 
             if (window.parent) {
+                    window.parent.postMessage(JSON.stringify({
+                        type: 'payment',
+                        result: paymentResult,
+                        fromAndroid: OKSDK.Util.isLaunchedFromOKApp()
+                    }), "*");
                 OKSDK.Payment.closePaymentFrame("paymentFrame");
+
             }
 
             if (window.opener) {
