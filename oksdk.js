@@ -17,6 +17,8 @@
         baseUrl: '',
         container: false, header_widget: ''
     };
+    var ads_state = {
+    };
     var sdk_success = nop;
     var sdk_failure = nop;
     var rest_counter = 0;
@@ -300,7 +302,7 @@
 
     function injectAdsWidget(frameId) {
         var frame = document.createElement('iframe');
-        frame.id = frameId || "ads-frame";
+        ads_state.frame_id = frame.id = frameId || "ads-frame";
         var sig = md5("call_id=1" + state.sessionSecretKey).toString();
         frame.src = state.widgetServer + "/dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.session_key;
         frame.style.display = 'none';
