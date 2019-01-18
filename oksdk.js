@@ -317,7 +317,9 @@
     // ---------------------------------------------------------------------------------------------------
 
     function injectAdsWidget(frameId, callbackFunction) {
-        var frame = ads_state.frame_element || document.createElement("iframe");
+        if (ads_state.frame_element) {
+            return;
+        }
         var framesCount = window.frames.length;
         frame.id = frameId || "ok-ads-frame";
 
