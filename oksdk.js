@@ -298,8 +298,9 @@
     // Ads
     // ---------------------------------------------------------------------------------------------------
 
-    function injectAdsWidget() {
-        var frame = document.createElement('adsFrame');
+    function injectAdsWidget(frameId) {
+        var frame = document.createElement('iframe');
+        frame.id = frameId || "ads-frame";
         var sig = md5("call_id=1" + state.sessionSecretKey).toString();
         frame.src = state.widgetServer + "/dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.session_key;
         frame.style.display = 'none';
