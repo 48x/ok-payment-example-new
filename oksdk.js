@@ -313,7 +313,7 @@
     }
 
     function showMidroll() {
-     var style = document.getElementsByTagName(ads_state.frame_id)[0].style;
+     var style = document.getElementById(ads_state.frame_id).style;
         style.display = '';
 	setTimeout(function(){
         window.frames[0].postMessage(JSON.stringify({method: 'show'}), '*');
