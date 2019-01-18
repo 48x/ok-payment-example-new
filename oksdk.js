@@ -317,34 +317,33 @@
     function injectAdsWidget(frameId) {
         var framesCount = window.frames.length;
         var frame = document.createElement("iframe");
-        ads_state.frame_id = frame.id = frameId || "ads-frame";
-        ads_state.frame_index = framesCount;
+        frame.id = frameId || "ok-ads-frame";
+
         frame.src = getAdsWidgetSrc();
         for (var prop in ads_widget_style) {
             frame.style[prop] = ads_widget_style[prop];
         }
         frame.style.display = "none";
         document.body.appendChild(frame);
-
-
+        ads_state.frame_element = frame;
+        ads_state.window_frame = window.frames[framesCount];
     }
 
     function prepareMidroll() {
-        if (!ads_state.frame_id) {
+        if (!ads_state.window_frame) {
             console.log("Ads are not initialized. Please initialize them first");
         } else {
-            window.frames[ads_state.frame_index].postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
+           ads_state.window_frame.postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
         }
     }
 
     function showMidroll() {
-        if (!ads_state.frame_id) {
+        if (!ads_state.window_frame) {
             console.log("Ads are not initialized. Please initialize them first");
         } else {
-            var ads_frame = document.getElementById(ads_state.frame_id);
-            ads_frame.style.display = '';
+            ads_state.frame_element.style.display = '';
             setTimeout(function(){
-                window.frames[ads_state.frame_index].postMessage(JSON.stringify({method: 'show'}), '*');
+                ads_state.window_frame.postMessage(JSON.stringify({method: 'show'}), '*');
             }, 10);
         }
     }
