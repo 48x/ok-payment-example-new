@@ -312,6 +312,36 @@
         }
     }
 
+    /**
+     * Genrates an OK payment service URL for a selected product
+     */
+    function getPaymentQuery(productName, productPrice, productCode, options) {
+        var params = {};
+        params['name'] = productName;
+        params['price'] = productPrice;
+        params['code'] = productCode;
+
+        options = options || {};
+        var host = options['mob_pay_url'] || state.mobServer;
+
+        params["application_key"] = state.app_key;
+        if (state.sessionKey) {
+            params["session_key"] = state.sessionKey;
+        } else {
+            params["access_token"] = state.accessToken;
+        }
+        params['sig'] = calcSignature(params, state.sessionSecretKey);
+
+        var query = host + 'api/show_payment?';
+        for (var key in params) {
+            if (params.hasOwnProperty(key)) {
+                query += key + "=" + encodeURIComponent(params[key]) + "&";
+            }
+        }
+
+       return query;
+    }
+
     // ---------------------------------------------------------------------------------------------------
     // Ads
     // ---------------------------------------------------------------------------------------------------
@@ -436,35 +466,6 @@
         }
     }
 
-    /**
-     * Genrates an OK payment service URL for a selected product
-     */
-    function getPaymentQuery(productName, productPrice, productCode, options) {
-        var params = {};
-        params['name'] = productName;
-        params['price'] = productPrice;
-        params['code'] = productCode;
-
-        options = options || {};
-        var host = options['mob_pay_url'] || state.mobServer;
-
-        params["application_key"] = state.app_key;
-        if (state.sessionKey) {
-            params["session_key"] = state.sessionKey;
-        } else {
-            params["access_token"] = state.accessToken;
-        }
-        params['sig'] = calcSignature(params, state.sessionSecretKey);
-
-        var query = host + 'api/show_payment?';
-        for (var key in params) {
-            if (params.hasOwnProperty(key)) {
-                query += key + "=" + encodeURIComponent(params[key]) + "&";
-            }
-        }
-
-       return query;
-    }
 
     // ---------------------------------------------------------------------------------------------------
     // Widgets
