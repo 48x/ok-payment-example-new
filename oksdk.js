@@ -329,7 +329,6 @@
         ads_state.window_frame = window.frames[framesCount];
 
         var callback = callbackFunction || function(e) {
-            console.log(e.data);
             var o = JSON.parse(e.data);
             if (!o.call) {
                 return;
@@ -338,9 +337,9 @@
             if (o.call.method === "init" && o.result.status === "ok") {
                 console.log('initialized');
             }
+
             if (o.call.method.indexOf("show") == 0) {
-                var style = document.getElementsByTagName('iframe')[0].style;
-                style.display = 'none';
+                ads_state.frame_element.style.display = "none";
             }
             alert(e.data);
         }
