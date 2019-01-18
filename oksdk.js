@@ -383,7 +383,7 @@
                         ads_state.ready = true;
                     }
                 } else {
-                    console.log("Ad is not ready to be shown. Code: " + data.result.code);
+                    console.log("Ad is not ready to be shown. Status: " + data.result.status + ". Code: " + data.result.code);
                     ads_state.ready = false;
                 }
                 break;
@@ -392,8 +392,11 @@
                 if (data.result.status === "ok") {
                     if (data.result.code === "complete") {
                         console.log("Ad is successfully shown");
-                        ads_state.ready = true;
+                        ads_state.ready = false;
                     }
+                } else {
+                    console.log("An add can't be shown. Status: " + data.result.status + ". Code: " + data.result.code)
+                    ads_state.ready = false;
                 }
                 break;
         }
