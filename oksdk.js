@@ -20,6 +20,18 @@
     var ads_state = {
     };
 
+    var ads_widget_style = {
+        border: 0;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: "100%";
+        height: "100%";
+        z-index: 1000;
+    }
+
     var sdk_success = nop;
     var sdk_failure = nop;
     var rest_counter = 0;
