@@ -88,6 +88,45 @@
         }
     });
 
+    window.addEventListener('load',function() {
+        var standalone = (window.parent == window);
+        if(!standalone) {
+           window.API_callback = function() {console.log(arguments);alert(JSON.stringify(arguments));};
+           FAPI.init();
+        } else {
+            var res = {};
+        var url = window.location.search;
+        if (url) {
+            url = url.substr(1);    // Drop the leading '?' / '#'
+            var nameValues = url.split("&");
+
+            for (var i = 0; i < nameValues.length; i++) {
+                var nameValue = nameValues[i].split("=");
+                var name = nameValue[0];
+                var value = nameValue[1];
+                value = decodeURIComponent(value.replace(/\+/g, " "));
+                res[name] = value;
+            }
+        }
+        _('sessionKey',res['session_key']);
+        _('sessionSecretKey',res['session_secret_key']);
+        _('appId',res['app_id']);
+        _('connect',res['connect']);
+         window.addEventListener('message', function (e) {
+            console.log(e.data);
+            var o = JSON.parse(e.data);
+            if (o.call.method === "init" && o.result.status === "ok") {
+                console.log('initialized');
+            }
+            if (o.call.method.indexOf("show") == 0) {
+                var style = document.getElementsByTagName('iframe')[0].style;
+                style.display = 'none';
+            }
+            alert(e.data);
+        });
+        console.log(res);
+        }
+
     // Since we are using separate window when opening a payment, we should send/receive messages
     // to communicate with the opened window
     window.addEventListener('message', function (event) {
