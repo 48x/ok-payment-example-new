@@ -18,7 +18,8 @@
         container: false, header_widget: ''
     };
     var ads_state = {
-        init: false
+        init: false,
+        ready: false
     };
 
     var ads_widget_style = {
@@ -358,7 +359,7 @@
         return widgetSrc;
     }
 
-    function defaultAdCallback(message, onInit, onShow, onPrepare) {
+    function defaultAdCallback(message) {
         var data = JSON.parse(message.data);
 
         if (!data.call || !data.call.method) {
@@ -367,14 +368,33 @@
 
         switch (data.call.method) {
             case "init":
-                alert("init");
+                if (data.result.status === "ok") {
+                    console.log("OK Ads initialization complete");
+                    ads_state.init = true;
+                } else {
+                    console.log("OK Ads failed to initialize");
+                    ads_state.init = false;
+                }
                 break;
             case "prepare":
-                alert("prepare");
+                if (data.result.status === "ok") {
+                    if (data.result.code === "ready") {
+                        console.log("Ad is ready to be shown");
+                        ads_state.ready = true;
+                    }
+                } else {
+                    console.log("Ad is not ready to be shown. Code: " + data.result.code);
+                    ads_state.ready = false;
+                }
                 break;
             case "show":
-                alert("show");
                 ads_state.frame_element.style.display = "none";
+                if (data.result.status === "ok") {
+                    if (data.result.code === "complete") {
+                        console.log("Ad is successfully shown");
+                        ads_state.ready = true;
+                    }
+                }
                 break;
         }
     }
@@ -766,7 +786,8 @@
     exports.Ads = {
         init: injectAdsWidget,
         prepareMidroll: prepareMidroll,
-        showMidroll: showMidroll
+        showMidroll: showMidroll,
+        state: ads_state
     }
 
     exports.Util = {
