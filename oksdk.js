@@ -331,8 +331,16 @@
         if (!ads_state.frame_id) {
             console.log("Ads are not initialized. Please initialize them first");
         } else {
-            var ads_frame = document.getElementById(ads_state.frame_id);
-            ads_frame.postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
+            if (window.frames.length > 0) {
+                for (var frame in window.frames) {
+                    if (frame.location.indexOf("st.cmd=WidgetVideoAdv") !== -1) {
+                        var ads_frame = frame;
+                    }
+                }
+            }
+            if (ads_frame) {
+                ads_frame.postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
+            }
         }
     }
 
