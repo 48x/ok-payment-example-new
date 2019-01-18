@@ -29,7 +29,8 @@
         left: 0,
         width: "100%",
         height: "100%",
-        zIndex: 1000
+        zIndex: 1000,
+        display: "none"
     }
 
     var sdk_success = nop;
@@ -322,18 +323,29 @@
         }
         frame.style.display = "none";
         document.body.appendChild(frame);
+
+
     }
 
     function prepareMidroll() {
-        window.frames[0].postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
+        if (!ads_state.frame_id) {
+            console.log("Ads are not initialized. Please initialize them first");
+        } else {
+            var ads_frame = document.getElementById(ads_state.frame_id);
+            ads_frame.frames[0].postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
+        }
     }
 
     function showMidroll() {
-     var style = document.getElementById(ads_state.frame_id).style;
-        style.display = '';
-	setTimeout(function(){
-        window.frames[0].postMessage(JSON.stringify({method: 'show'}), '*');
-},10);
+        if (!ads_state.frame_id) {
+            console.log("Ads are not initialized. Please initialize them first");
+        } else {
+            var ads_frame = document.getElementById(ads_state.frame_id);
+            ads_frame.style.display = '';
+            setTimeout(function(){
+                ads_frame.postMessage(JSON.stringify({method: 'show'}), '*');
+            }, 10);
+        }
     }
 
     function getAdsWidgetSrc() {
