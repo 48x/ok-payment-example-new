@@ -329,23 +329,7 @@
         ads_state.frame_element = frame;
         ads_state.window_frame = window.frames[framesCount];
 
-        var callback = callbackFunction || function(e) {
-            var o = JSON.parse(e.data);
-            if (!o.call) {
-                return;
-            }
-
-            if (o.call.method === "init" && o.result.status === "ok") {
-                console.log("Ok Ads widget successfully initialized");
-                ads_state.init = true;
-            }
-
-            if (o.call.method.indexOf("show") == 0) {
-                ads_state.frame_element.style.display = "none";
-            }
-            console.log(o);
-        }
-
+        var callback = callbackFunction || defaultAdCallback(e);
         window.addEventListener('message', callback);
     }
 
@@ -374,25 +358,25 @@
         return widgetSrc;
     }
 
-    function defaultAdCallback(message) {
+    function defaultAdCallback(message, onInit, onShow, onPrepare) {
         var data = JSON.parse(message.data);
 
         if (!data.call || !data.call.method) {
             return;
         }
 
-        if (data.call.method === "init") {
-            if (!data.result || !data.result.status) {
-                return;
-            }
-
-            if (data.result.status === "ok") {
-                console.log("Ok Ads widget successfully initialized");
-                ads_state.init = true;
-                return;
-            }
+        switch (data.call.method) {
+            "init":
+                alert("init");
+                break;
+            "prepare":
+                alert("prepare");
+                break;
+            "show":
+                alert("show");
+                ads_state.frame_element.style.display = "none";
+                break;
         }
-
     }
 
     /**
