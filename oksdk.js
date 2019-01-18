@@ -332,20 +332,20 @@
     function prepareMidroll() {
         if (!ads_state.window_frame) {
             console.log("Ads are not initialized. Please initialize them first");
-        } else {
-           ads_state.window_frame.postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
+            return;
         }
+        ads_state.window_frame.postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
     }
 
     function showMidroll() {
         if (!ads_state.window_frame) {
             console.log("Ads are not initialized. Please initialize them first");
-        } else {
-            ads_state.frame_element.style.display = '';
-            setTimeout(function(){
-                ads_state.window_frame.postMessage(JSON.stringify({method: 'show'}), '*');
-            }, 10);
+            return;
         }
+        ads_state.frame_element.style.display = '';
+        setTimeout(function(){
+            ads_state.window_frame.postMessage(JSON.stringify({method: 'show'}), '*');
+        }, 10);
     }
 
     function getAdsWidgetSrc() {
