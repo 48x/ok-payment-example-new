@@ -343,6 +343,7 @@
             if (o.call.method.indexOf("show") == 0) {
                 ads_state.frame_element.style.display = "none";
             }
+            console.log(o);
         }
 
         window.addEventListener('message', callback);
@@ -371,6 +372,27 @@
         var sig = md5("call_id=1" + state.sessionSecretKey).toString();
         var widgetSrc = state.widgetServer + "dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.sessionKey;
         return widgetSrc;
+    }
+
+    function defaultAdCallback(message) {
+        var data = JSON.parse(message.data);
+
+        if (!data.call || !data.call.method) {
+            return;
+        }
+
+        if (data.call.method === "init") {
+            if (!data.result || !data.result.status) {
+                return;
+            }
+
+            if (data.result.status === "ok") {
+                console.log("Ok Ads widget successfully initialized");
+                ads_state.init = true;
+                return;
+            }
+        }
+
     }
 
     /**
