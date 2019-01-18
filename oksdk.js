@@ -320,6 +320,7 @@
         if (ads_state.frame_element) {
             return;
         }
+        var frame = document.createElement("iframe");
         var framesCount = window.frames.length;
         frame.id = frameId || "ok-ads-frame";
 
