@@ -345,7 +345,7 @@
             alert(e.data);
         }
 
-        window.addEventListener('message', callbackFunction);
+        window.addEventListener('message', callback);
     }
 
     function prepareMidroll() {
