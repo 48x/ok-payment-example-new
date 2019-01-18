@@ -333,9 +333,7 @@
         if (!ads_state.frame_id) {
             console.log("Ads are not initialized. Please initialize them first");
         } else {
-            if (ads_frame) {
-                window.frames[ads_state.frame_index].postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
-            }
+            window.frames[ads_state.frame_index].postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
         }
     }
 
