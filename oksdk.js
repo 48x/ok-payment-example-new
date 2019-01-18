@@ -826,7 +826,7 @@
         prepareMidroll: prepareMidroll,
         showMidroll: showMidroll,
         destroy: removeAdsWidget,
-        state: ads_state
+        State: ads_state
     }
 
     exports.Util = {
