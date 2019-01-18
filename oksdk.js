@@ -317,7 +317,9 @@
         var frame = document.createElement("iframe");
         ads_state.frame_id = frame.id = frameId || "ads-frame";
         frame.src = getAdsWidgetSrc();
-        frame.style = ads_widget_style;
+        for (var prop in ads_widget_style) {
+            frame.style[prop] = css[prop];
+        }
         frame.style.display = "none";
         document.body.appendChild(frame);
     }
