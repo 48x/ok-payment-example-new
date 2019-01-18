@@ -303,17 +303,27 @@
     function injectAdsWidget(frameId) {
         var frame = document.createElement('iframe');
         ads_state.frame_id = frame.id = frameId || "ads-frame";
-        var sig = md5("call_id=1" + state.sessionSecretKey).toString();
-        frame.src = state.widgetServer + "/dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.session_key;
+        frame.src = getAdsWidgetSrc();
         frame.style.display = 'none';
         document.body.appendChild(frame);
-        console.log(ads_state);
     }
 
     function prepareMidroll() {
+        window.frames[0].postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
     }
 
     function showMidroll() {
+     var style = document.getElementsByTagName(ads_state.frame_id)[0].style;
+        style.display = '';
+	setTimeout(function(){
+        window.frames[0].postMessage(JSON.stringify({method: 'show'}), '*');
+},10);
+    }
+
+    function getAdsWidgetSrc() {
+        var sig = md5("call_id=1" + state.sessionSecretKey).toString();
+        var widgetSrc = state.widgetServer + "/dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.session_key;
+        return widgetSrc;
     }
 
     /**
