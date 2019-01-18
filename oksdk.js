@@ -424,6 +424,10 @@
     * Default callback function used for OK Ads Widget
     */
     function defaultAdCallback(message) {
+        if (!message.data) {
+            return;
+        }
+
         var data = JSON.parse(message.data);
 
         if (!data.call || !data.call.method) {
