@@ -19,6 +19,7 @@
     };
     var ads_state = {
     };
+
     var sdk_success = nop;
     var sdk_failure = nop;
     var rest_counter = 0;
@@ -285,7 +286,7 @@
         if (window.parent) {
             var frameContainer = window.parent.document.getElementById(frameId);
             if (frameContainer) {
-                frameContainer.innerHTML = '';
+                frameContainer.innerHTML = "";
                 frameContainer.style.display = "none";
                 frameContainer.style.position = "";
                 frameContainer.style.left = "";
@@ -301,10 +302,19 @@
     // ---------------------------------------------------------------------------------------------------
 
     function injectAdsWidget(frameId) {
-        var frame = document.createElement('iframe');
+        var frame = document.createElement("iframe");
         ads_state.frame_id = frame.id = frameId || "ads-frame";
         frame.src = getAdsWidgetSrc();
-        frame.style.display = 'none';
+        frame.style.display = "none";
+        frame.style.border = 0;
+        frame.style.position = "fixed";
+        frame.style.top = 0;
+        frame.style.right = 0;
+        frame.style.bottom = 0;
+        frame.style.left = 0;
+        frame.style.width = "100%";
+        frame.style.height = "100%";
+        frame.style.z-index = 1000;
         document.body.appendChild(frame);
     }
 
