@@ -329,7 +329,7 @@
         ads_state.frame_element = frame;
         ads_state.window_frame = window.frames[framesCount];
 
-        var callback = callbackFunction || defaultAdCallback(e);
+        var callback = callbackFunction || defaultAdCallback();
         window.addEventListener('message', callback);
     }
 
