@@ -356,6 +356,16 @@
         }, 10);
     }
 
+    function removeAdsWidget() {
+        if (ads_state.frame_element) {
+            ads_state.frame_element.parentNode.removeChild(ads_state.frame_element);
+            ads_state = {
+                init: false,
+                ready: false
+            };
+        }
+    }
+
     function getAdsWidgetSrc() {
         var sig = md5("call_id=1" + state.sessionSecretKey).toString();
         var widgetSrc = state.widgetServer + "dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.sessionKey;
@@ -793,6 +803,7 @@
         init: injectAdsWidget,
         prepareMidroll: prepareMidroll,
         showMidroll: showMidroll,
+        destroy: removeAdsWidget,
         state: ads_state
     }
 
