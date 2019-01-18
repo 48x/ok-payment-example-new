@@ -318,7 +318,7 @@
         ads_state.frame_id = frame.id = frameId || "ads-frame";
         frame.src = getAdsWidgetSrc();
         for (var prop in ads_widget_style) {
-            frame.style[prop] = css[prop];
+            frame.style[prop] = ads_widget_style[prop];
         }
         frame.style.display = "none";
         document.body.appendChild(frame);
