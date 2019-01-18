@@ -332,7 +332,7 @@
             console.log("Ads are not initialized. Please initialize them first");
         } else {
             var ads_frame = document.getElementById(ads_state.frame_id);
-            ads_frame.frames[0].postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
+            ads_frame.postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
         }
     }
 
