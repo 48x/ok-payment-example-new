@@ -18,6 +18,7 @@
         container: false, header_widget: ''
     };
     var ads_state = {
+        init: false
     };
 
     var ads_widget_style = {
@@ -335,13 +336,13 @@
             }
 
             if (o.call.method === "init" && o.result.status === "ok") {
-                console.log('initialized');
+                console.log("Ok Ads widget successfully initialized");
+                ads_state.init = true;
             }
 
             if (o.call.method.indexOf("show") == 0) {
                 ads_state.frame_element.style.display = "none";
             }
-            alert(e.data);
         }
 
         window.addEventListener('message', callback);
