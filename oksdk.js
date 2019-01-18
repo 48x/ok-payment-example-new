@@ -315,8 +315,10 @@
     // ---------------------------------------------------------------------------------------------------
 
     function injectAdsWidget(frameId) {
+        var framesCount = window.frames.length;
         var frame = document.createElement("iframe");
         ads_state.frame_id = frame.id = frameId || "ads-frame";
+        ads_state.frame_index = framesCount;
         frame.src = getAdsWidgetSrc();
         for (var prop in ads_widget_style) {
             frame.style[prop] = ads_widget_style[prop];
@@ -331,15 +333,8 @@
         if (!ads_state.frame_id) {
             console.log("Ads are not initialized. Please initialize them first");
         } else {
-            if (window.frames.length > 0) {
-                for (var frame in window.frames) {
-                    if (frame.location.indexOf("st.cmd=WidgetVideoAdv") !== -1) {
-                        var ads_frame = frame;
-                    }
-                }
-            }
             if (ads_frame) {
-                ads_frame.postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
+                window.frames[ads_state.frame_index].postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
             }
         }
     }
@@ -351,7 +346,7 @@
             var ads_frame = document.getElementById(ads_state.frame_id);
             ads_frame.style.display = '';
             setTimeout(function(){
-                ads_frame.postMessage(JSON.stringify({method: 'show'}), '*');
+                window.frames[ads_state.frame_index].postMessage(JSON.stringify({method: 'show'}), '*');
             }, 10);
         }
     }
