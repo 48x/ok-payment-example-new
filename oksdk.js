@@ -366,13 +366,13 @@
         }
 
         switch (data.call.method) {
-            "init":
+            case "init":
                 alert("init");
                 break;
-            "prepare":
+            case "prepare":
                 alert("prepare");
                 break;
-            "show":
+            case "show":
                 alert("show");
                 ads_state.frame_element.style.display = "none";
                 break;
