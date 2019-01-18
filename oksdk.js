@@ -314,7 +314,7 @@
     // Ads
     // ---------------------------------------------------------------------------------------------------
 
-    function injectAdsWidget(frameId) {
+    function injectAdsWidget(frameId, callbackFunction) {
         var framesCount = window.frames.length;
         var frame = document.createElement("iframe");
         frame.id = frameId || "ok-ads-frame";
@@ -327,6 +327,25 @@
         document.body.appendChild(frame);
         ads_state.frame_element = frame;
         ads_state.window_frame = window.frames[framesCount];
+
+        var callback = callbackFunction || function(e) {
+            console.log(e.data);
+            var o = JSON.parse(e.data);
+            if (!o.call) {
+                return;
+            }
+
+            if (o.call.method === "init" && o.result.status === "ok") {
+                console.log('initialized');
+            }
+            if (o.call.method.indexOf("show") == 0) {
+                var style = document.getElementsByTagName('iframe')[0].style;
+                style.display = 'none';
+            }
+            alert(e.data);
+        }
+
+        window.addEventListener('message', callbackFunction);
     }
 
     function prepareMidroll() {
