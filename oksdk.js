@@ -322,7 +322,7 @@
 
     function getAdsWidgetSrc() {
         var sig = md5("call_id=1" + state.sessionSecretKey).toString();
-        var widgetSrc = state.widgetServer + "/dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.session_key;
+        var widgetSrc = state.widgetServer + "/dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.sessionKey;
         return widgetSrc;
     }
 
