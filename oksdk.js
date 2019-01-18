@@ -294,6 +294,24 @@
         }
     }
 
+    // ---------------------------------------------------------------------------------------------------
+    // Ads
+    // ---------------------------------------------------------------------------------------------------
+
+    function injectAdsWidget() {
+        var frame = document.createElement('adsFrame');
+        var sig = CryptoJS.MD5("call_id=1" + state.sessionSecretKey).toString();
+        frame.src = state.widgetServer + "/dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.session_key);
+        frame.style.display = 'none';
+        document.body.appendChild(frame);
+    }
+
+    function prepareMidroll() {
+    }
+
+    function showMidroll() {
+    }
+
     /**
      * Genrates an OK payment service URL for a selected product
      */
@@ -677,6 +695,12 @@
         invite: widgetInvite,
         suggest: widgetSuggest
     };
+
+    exports.Ads = {
+        init: injectAdsWidget,
+        prepareMidroll: prepareMidroll,
+        showMidroll: showMidroll
+    }
 
     exports.Util = {
         md5: md5,
