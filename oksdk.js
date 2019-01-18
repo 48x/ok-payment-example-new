@@ -430,6 +430,10 @@
             return;
         }
 
+        if (!data.result || !data.result.status) {
+            return;
+        }
+
         switch (data.call.method) {
             case "init":
                 if (data.result.status === "ok") {
