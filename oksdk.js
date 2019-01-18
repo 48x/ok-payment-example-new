@@ -307,6 +307,7 @@
         frame.src = state.widgetServer + "/dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.session_key;
         frame.style.display = 'none';
         document.body.appendChild(frame);
+        console.log(ads_state);
     }
 
     function prepareMidroll() {
