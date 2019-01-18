@@ -316,6 +316,12 @@
     // Ads
     // ---------------------------------------------------------------------------------------------------
 
+    /**
+     * Injects an OK Ads Widget to a game's page
+     *
+     * @param {string}      [frameId]   optional frame element id. If not present "ok-ads-frame" id will be used
+     * @param {function}    [secretKey] callbackFunction used for all ad methods. Takes a single object input parameter
+     */
     function injectAdsWidget(frameId, callbackFunction) {
         if (ads_state.frame_element) {
             return;
@@ -337,6 +343,9 @@
         window.addEventListener('message', callback);
     }
 
+    /**
+     * Requests an ad to be shown for a user from ad providers
+     */
     function prepareMidroll() {
         if (!ads_state.window_frame) {
             console.log("Ads are not initialized. Please initialize them first");
@@ -345,6 +354,9 @@
         ads_state.window_frame.postMessage(JSON.stringify({method: 'prepare', arguments: ['midroll']}), '*');
     }
 
+    /**
+     * Shows previously prepared ad to a user
+     */
     function showMidroll() {
         if (!ads_state.window_frame) {
             console.log("Ads are not initialized. Please initialize them first");
@@ -356,6 +368,9 @@
         }, 10);
     }
 
+    /**
+     * Removed an Ok Ads Widget from page source and completely resets ads status
+     */
     function removeAdsWidget() {
         if (ads_state.frame_element) {
             ads_state.frame_element.parentNode.removeChild(ads_state.frame_element);
@@ -366,12 +381,18 @@
         }
     }
 
+    /**
+     * Generates an URL for OK Ads Widget
+     */
     function getAdsWidgetSrc() {
         var sig = md5("call_id=1" + state.sessionSecretKey).toString();
         var widgetSrc = state.widgetServer + "dk?st.cmd=WidgetVideoAdv&st.app=" + state.app_id + "&st.sig=" + sig + "&st.call_id=1&st.session_key=" + state.sessionKey;
         return widgetSrc;
     }
 
+    /**
+    * Default callback function used for OK Ads Widget
+    */
     function defaultAdCallback(message) {
         var data = JSON.parse(message.data);
 
