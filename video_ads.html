@@ -28,8 +28,6 @@
                 // Authorization / initialization finished correctly
                 // We can start proceeding with OAUTH stuff
 
-                document.getElementById('content').style.display = '';
-
             }, function (error) {
                 alert('OKSDK error' + OKSDK.Util.toString(error));
             });
@@ -75,24 +73,21 @@
     });
 </script>
 <body>
-<h1>Hello world!!!</h1>
-<div class="mobile" style="display:none">
-Application Id: <input type="text" id="appId" value=""> <br/>
-Connect: <input type="text" id="connect" value=""> <br/>
-Session Key: <input type="text" id="sessionKey" value="">
-<br/>
-Session Secret Key: <input type="text" id="sessionSecretKey" value=""> <br/>
-<input type="submit" value="inject frame" onclick="injectFrame()"><br/>
-<input type="submit" value="prepare midroll" onclick="prepare('midroll')">
-<!-- <input type="submit" value="prepare preroll" onclick="prepare('preroll')"> -->
-<input type="submit" value="show" onclick="show()">
-<br/>
-</div>
-<div class="portal" style="display:none">
-    <!-- <input type="submit" value="show preroll" onclick="FAPI.invokeUIMethod('showPreroll')"> -->
-    <input type="submit" value="prepare midroll" onclick="FAPI.invokeUIMethod('prepareMidroll')">
-<input type="submit" value="show midroll" onclick="FAPI.invokeUIMethod('showMidroll')">
-
-</div>
+    <h1>Пример показа видеорекламы</h1>
+    <div class="mobile" style="display:none">
+        Application Id: <input type="text" id="appId" value=""><br/>
+        Connect: <input type="text" id="connect" value=""><br/>
+        Session Key: <input type="text" id="sessionKey" value=""><br/>
+        Session Secret Key: <input type="text" id="sessionSecretKey" value=""><br/>
+        <input type="submit" value="inject frame" onclick="injectFrame()"><br/>
+        <input type="submit" value="prepare midroll" onclick="prepare('midroll')">
+        <!-- <input type="submit" value="prepare preroll" onclick="prepare('preroll')"> -->
+        <input type="submit" value="show" onclick="show()">
+        <br/>
+    </div>
+    <div class="portal" style="display:none">
+        <input type="submit" value="prepare midroll" onclick="FAPI.invokeUIMethod('prepareMidroll')">
+        <input type="submit" value="show midroll" onclick="FAPI.invokeUIMethod('showMidroll')">
+    </div>
 </body>
 </html>
