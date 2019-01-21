@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width"/>
     <title>OKSDK - Video Adv</title>
 </head>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
 <script type="text/javascript" src="https://api.ok.ru/js/fapi5.js"></script>
 <script type="text/javascript" src="oksdk.js"></script>
 <script type="text/javascript">
@@ -59,6 +58,15 @@
         OKSDK.Ads.init();
     }
 
+    function prepare() {
+        OKSDK.Ads.prepareMidroll();
+    }
+
+    function show() {
+        OKSDK.Ads.showMidroll();
+    }
+
+
     window.addEventListener('load', function() {
         var standalone = (window.parent == window);
         if(!standalone) {
@@ -75,13 +83,8 @@
 <body>
     <h1>Пример показа видеорекламы</h1>
     <div class="mobile" style="display:none">
-        Application Id: <input type="text" id="appId" value=""><br/>
-        Connect: <input type="text" id="connect" value=""><br/>
-        Session Key: <input type="text" id="sessionKey" value=""><br/>
-        Session Secret Key: <input type="text" id="sessionSecretKey" value=""><br/>
         <input type="submit" value="inject frame" onclick="injectFrame()"><br/>
         <input type="submit" value="prepare midroll" onclick="prepare('midroll')">
-        <!-- <input type="submit" value="prepare preroll" onclick="prepare('preroll')"> -->
         <input type="submit" value="show" onclick="show()">
         <br/>
     </div>
