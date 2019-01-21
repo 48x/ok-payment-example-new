@@ -55,21 +55,21 @@
                 if (data.result.status === "ok") {
                     document.getElementById("log").textContent += getCurrentTime() +  " OK Ads initialization complete" + "\n";
                     console.log();
-                    ads_state.init = true;
+                    OKSDK.Ads.State.init = true;
                 } else {
                     document.getElementById("log").textContent += getCurrentTime() +  " OK Ads failed to initialize" + "\n";
-                    ads_state.init = false;
+                    OKSDK.Ads.State.init = false;
                 }
                 break;
             case "prepare":
                 if (data.result.status === "ok") {
                     if (data.result.code === "ready") {
                         document.getElementById("log").textContent += getCurrentTime() +  " Ad is ready to be shown" + "\n";
-                        ads_state.ready = true;
+                        OKSDK.Ads.State.ready = true;
                     }
                 } else {
                     document.getElementById("log").textContent += getCurrentTime() +  " Ad is not ready to be shown. Status: " + data.result.status + ". Code: " + data.result.code + "\n";
-                    ads_state.ready = false;
+                    OKSDK.Ads.State.ready = false;
                 }
                 break;
             case "show":
@@ -77,11 +77,11 @@
                 if (data.result.status === "ok") {
                     if (data.result.code === "complete") {
                         document.getElementById("log").textContent += getCurrentTime() +  " Ad is successfully shown" + "\n";
-                        ads_state.ready = false;
+                        OKSDK.Ads.State.ready = false;
                     }
                 } else {
                     document.getElementById("log").textContent += getCurrentTime() +  " An ad can't be shown. Status: " + data.result.status + ". Code: " + data.result.code + "\n";
-                    ads_state.ready = false;
+                    OKSDK.Ads.State.ready = false;
                 }
                 break;
         }
