@@ -1,0 +1,68 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <title>OKSDK - Video Adv</title>
+</head>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+<script type="text/javascript" src="https://api.ok.ru/js/fapi5.js"></script>
+<script type="text/javascript" src="oksdk.js"></script>
+<script type="text/javascript">
+    function _(id, value) {
+        if (value) {
+            document.getElementById(id).value = value;
+        }
+        return document.getElementById(id).value;
+    }
+
+    function prepare(content) {
+        window.frames[0].postMessage(JSON.stringify({method: 'prepare', arguments: [content]}), '*');
+    }
+
+    function show() {
+        var style = document.getElementsByTagName('iframe')[0].style;
+        style.display = '';
+	setTimeout(function(){
+        window.frames[0].postMessage(JSON.stringify({method: 'show'}), '*');
+},10);
+   }
+
+    function injectFrame() {
+        OKSDK.Ads.init();
+    }
+
+    window.addEventListener('load', function() {
+        var standalone = (window.parent == window);
+        if(!standalone) {
+           window.API_callback = function() {console.log(arguments);alert(JSON.stringify(arguments));};
+           FAPI.init();
+        } else {
+            OKSDK.init();
+
+        }
+
+        document.getElementsByClassName(standalone?'mobile':'portal')[0].style.display='';
+    });
+</script>
+<body>
+<h1>Hello world!!!</h1>
+<div class="mobile" style="display:none">
+Application Id: <input type="text" id="appId" value=""> <br/>
+Connect: <input type="text" id="connect" value=""> <br/>
+Session Key: <input type="text" id="sessionKey" value="">
+<br/>
+Session Secret Key: <input type="text" id="sessionSecretKey" value=""> <br/>
+<input type="submit" value="inject frame" onclick="injectFrame()"><br/>
+<input type="submit" value="prepare midroll" onclick="prepare('midroll')">
+<!-- <input type="submit" value="prepare preroll" onclick="prepare('preroll')"> -->
+<input type="submit" value="show" onclick="show()">
+<br/>
+</div>
+<div class="portal" style="display:none">
+    <!-- <input type="submit" value="show preroll" onclick="FAPI.invokeUIMethod('showPreroll')"> -->
+    <input type="submit" value="prepare midroll" onclick="FAPI.invokeUIMethod('prepareMidroll')">
+<input type="submit" value="show midroll" onclick="FAPI.invokeUIMethod('showMidroll')">
+
+</div>
+</body>
+</html>
