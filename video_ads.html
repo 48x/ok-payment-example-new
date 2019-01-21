@@ -13,7 +13,7 @@
         if (!standalone) {
            window.API_callback = function() {
                console.log(arguments);
-               alert(JSON.stringify(arguments)
+               document.getElementById("log").textContent += getCurrentTime() +  " [WEB] " + arguments + "\n";
                );
            };
            FAPI.init();
@@ -99,6 +99,14 @@
         OKSDK.Ads.showMidroll();
     }
 
+    function prepareWeb() {
+        FAPI.invokeUIMethod('prepareMidroll');
+    }
+
+    function showWeb() {
+        FAPI.invokeUIMethod('showMidroll');
+    }
+
     function getCurrentTime() {
         var now = new Date();
         return ("[" + new Date().toLocaleString() + "]");
@@ -114,8 +122,8 @@
         <br/>
     </div>
     <div class="portal" style="display:none">
-        <input type="submit" value="prepare midroll" onclick="FAPI.invokeUIMethod('prepareMidroll')">
-        <input type="submit" value="show midroll" onclick="FAPI.invokeUIMethod('showMidroll')">
+        <input type="submit" value="prepare midroll" onclick="prepareWeb()">
+        <input type="submit" value="show midroll" onclick="showWeb()">
     </div>
     <div class="section">
         <div class="param">
