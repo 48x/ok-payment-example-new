@@ -35,27 +35,61 @@
         document.getElementsByClassName(standalone?'mobile':'portal')[0].style.display='';
     });
 
-    function _(id, value) {
-        if (value) {
-            document.getElementById(id).value = value;
+    function adsCallback(message) {
+        if (!message.data) {
+            return;
         }
-        return document.getElementById(id).value;
+
+        var data = JSON.parse(message.data);
+
+        if (!data.call || !data.call.method) {
+            return;
+        }
+
+        if (!data.result || !data.result.status) {
+            return;
+        }
+
+        switch (data.call.method) {
+            case "init":
+                if (data.result.status === "ok") {
+                    document.getElementById("chat").textContent += getCurrentTime() +  " OK Ads initialization complete" + "\n";
+                    console.log();
+                    ads_state.init = true;
+                } else {
+                    document.getElementById("chat").textContent += getCurrentTime() +  " OK Ads failed to initialize" + "\n";
+                    ads_state.init = false;
+                }
+                break;
+            case "prepare":
+                if (data.result.status === "ok") {
+                    if (data.result.code === "ready") {
+                        document.getElementById("chat").textContent += getCurrentTime() +  " Ad is ready to be shown" + "\n";
+                        ads_state.ready = true;
+                    }
+                } else {
+                    document.getElementById("chat").textContent += getCurrentTime() +  " Ad is not ready to be shown. Status: " + data.result.status + ". Code: " + data.result.code + "\n";
+                    ads_state.ready = false;
+                }
+                break;
+            case "show":
+                ads_state.frame_element.style.display = "none";
+                if (data.result.status === "ok") {
+                    if (data.result.code === "complete") {
+                        document.getElementById("chat").textContent += getCurrentTime() +  " Ad is successfully shown" + "\n";
+                        ads_state.ready = false;
+                    }
+                } else {
+                    document.getElementById("chat").textContent += getCurrentTime() +  " An ad can't be shown. Status: " + data.result.status + ". Code: " + data.result.code + "\n";
+                    ads_state.ready = false;
+                }
+                break;
+        }
     }
 
-    function prepare(content) {
-        window.frames[0].postMessage(JSON.stringify({method: 'prepare', arguments: [content]}), '*');
-    }
-
-    function show() {
-        var style = document.getElementsByTagName('iframe')[0].style;
-        style.display = '';
-	setTimeout(function(){
-        window.frames[0].postMessage(JSON.stringify({method: 'show'}), '*');
-},10);
-   }
 
     function injectFrame() {
-        OKSDK.Ads.init();
+        OKSDK.Ads.init(null, adsCallback);
     }
 
     function prepare() {
@@ -66,19 +100,11 @@
         OKSDK.Ads.showMidroll();
     }
 
+    function getCurrentTime() {
+        var now = new Date();
+        return ("[" + new Date().toLocaleString() + "]");
+    }
 
-    window.addEventListener('load', function() {
-        var standalone = (window.parent == window);
-        if(!standalone) {
-           window.API_callback = function() {console.log(arguments);alert(JSON.stringify(arguments));};
-           FAPI.init();
-        } else {
-            OKSDK.init();
-
-        }
-
-        document.getElementsByClassName(standalone?'mobile':'portal')[0].style.display='';
-    });
 </script>
 <body>
     <h1>Пример показа видеорекламы</h1>
@@ -91,6 +117,11 @@
     <div class="portal" style="display:none">
         <input type="submit" value="prepare midroll" onclick="FAPI.invokeUIMethod('prepareMidroll')">
         <input type="submit" value="show midroll" onclick="FAPI.invokeUIMethod('showMidroll')">
+    </div>
+    <div class="section">
+        <div class="param">
+            <textarea id="log" readonly rows="10"></textarea><br/>
+        </div>
     </div>
 </body>
 </html>

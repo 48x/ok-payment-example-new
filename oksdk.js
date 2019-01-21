@@ -467,7 +467,7 @@
                         ads_state.ready = false;
                     }
                 } else {
-                    console.log("An add can't be shown. Status: " + data.result.status + ". Code: " + data.result.code)
+                    console.log("An ad can't be shown. Status: " + data.result.status + ". Code: " + data.result.code)
                     ads_state.ready = false;
                 }
                 break;
