@@ -73,7 +73,7 @@
                 }
                 break;
             case "show":
-                ads_state.frame_element.style.display = "none";
+                OKSDK.Ads.State.frame_element.style.display = "none";
                 if (data.result.status === "ok") {
                     if (data.result.code === "complete") {
                         document.getElementById("log").textContent += getCurrentTime() +  " Ad is successfully shown" + "\n";
