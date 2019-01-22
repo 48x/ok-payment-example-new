@@ -90,6 +90,10 @@
         OKSDK.Ads.init(null, adsCallback);
     }
 
+    function removeFrame() {
+        OKSDK.Ads.destroy();
+    }
+
     function prepare() {
         OKSDK.Ads.prepareMidroll();
     }
@@ -115,8 +119,9 @@
 <body>
     <h1>Пример показа видеорекламы</h1>
     <div class="mobile" style="display:none">
-        <input type="submit" value="inject frame" onclick="injectFrame()"><br/>
-        <input type="submit" value="prepare midroll" onclick="prepare('midroll')">
+        <input type="submit" value="inject frame" onclick="injectFrame()">
+        <input type="submit" value="remove frame" onclick="removeFrame()"><br/>
+        <input type="submit" value="prepare midroll" onclick="prepare()">
         <input type="submit" value="show" onclick="show()">
         <br/>
     </div>
