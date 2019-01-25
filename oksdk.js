@@ -325,7 +325,7 @@
     }
 
     /**
-     * Genrates an OK payment service URL for a selected product
+     * Generates an OK payment service URL for a selected product
      */
     function getPaymentQuery(productName, productPrice, productCode, options) {
         var params = {};
@@ -352,6 +352,19 @@
         }
 
        return query;
+    }
+
+    function getCurrentAppId() {
+        if (state.container || state.accessToken) return;
+        restCall(
+            'application.getPublicInfo',
+            {"application_api_key": getRequestParameters()["application_key"]},
+            function(s, d, e) {
+                if (s == "ok") {
+                    state.app_id = s.app_id;
+                }
+            }
+        );
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -807,18 +820,6 @@
         return (userAgent && userAgent.length >= 0 && userAgent.indexOf(OK_ANDROID_APP_UA) > -1);
     }
 
-    function getCurrentAppId() {
-        if (state.container || state.accessToken) return;
-        restCall(
-            'application.getPublicInfo',
-            {"application_api_key": getRequestParameters()["application_key"]},
-            function(s, d, e) {
-                if (s == "ok") {
-                    state.app_id = s.app_id;
-                }
-            }
-        );
-    }
 
     /** stub func */
     function nop() {}
