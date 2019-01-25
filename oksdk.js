@@ -802,23 +802,12 @@
     }
 
     function getCurrentAppId() {
-        console.log("1");
-        restCall(
-            "application.getPublicInfo",
-            {"application_api_key": getRequestParameters()["application_key"]},
-            function (status, data, error) {
-                if (status == "ok") {
-                    return data.app_id;
-                    console.log("2");
-                }
-
-                if (status == "error") {
-                    console.log("Error: " + JSON.stringify(error));
-                    console.log("3");
-                    return null;
-                }
-            }
-        );
+        if (state.container || state.accessToken) return;
+        restCall('application.getPublicInfo',
+            {application_api_key: getRequestParameters()["application_key"]},
+            wrapCallback(onSuccess, null, function(data) {
+                return data.app_id;
+            }));
     }
 
     /** stub func */
