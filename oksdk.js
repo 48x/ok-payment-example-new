@@ -803,6 +803,7 @@
 
     function getCurrentAppId() {
         if (state.container || state.accessToken) return;
+        console.log("1");
         restCall(
             'application.getPublicInfo',
             {application_api_key: getRequestParameters()["application_key"]},
