@@ -809,10 +809,11 @@
             {"application_api_key": getRequestParameters()["application_key"]},
             function(s, d, e) {
                 if (s == "ok") {
-                    appId = d.app_id;
+                    appId = Object.assign({}, d.app_id);
                 }
             }
         );
+        console.log(appId);
         return appId;
     }
 
