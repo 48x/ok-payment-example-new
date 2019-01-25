@@ -289,7 +289,7 @@
         }
         var paymentHeader = "";
         if (isLaunchedInOKAndroidWebView()) {
-            paymentHeader += "<title style='display: block !important'>HEADER</title>"
+            paymentHeader += '<div class="head_t">Покупка в игре<div class="head_t_small">На счёте 1603 OК</div><div class="head_t_small"></div></div><a id="ret" href="https://m.ok.ru/app/okpaymentexample?custom_args=payment%3Dcancel"><div class="head_exit"></div></a>';
         }
         frameContainer.innerHTML = paymentHeader + frameElement;
         frameContainer.style.display = "block";
