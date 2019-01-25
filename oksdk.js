@@ -871,7 +871,6 @@
         decodeBase64: atob,
         getRequestParameters: getRequestParameters,
         toString: toString,
-        isLaunchedFromOKApp: isLaunchedInOKAndroidWebView,
-        getAppId: getCurrentAppId
+        isLaunchedFromOKApp: isLaunchedInOKAndroidWebView
     }
 })));
