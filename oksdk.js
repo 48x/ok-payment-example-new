@@ -289,7 +289,7 @@
         }
         var paymentHeader = "";
         if (isLaunchedInOKAndroidWebView()) {
-            paymentHeader += "<div>HEADER</div>"
+            paymentHeader += "<title>HEADER</div>"
         }
         frameContainer.innerHTML = paymentHeader + frameElement;
         frameContainer.style.display = "block";
