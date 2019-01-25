@@ -803,11 +803,16 @@
 
     function getCurrentAppId() {
         if (state.container || state.accessToken) return;
-        restCall('application.getPublicInfo',
+        restCall(
+            'application.getPublicInfo',
             {application_api_key: getRequestParameters()["application_key"]},
-            wrapCallback(function(appId) {return appId;}, null, function(data) {
-                return data.app_id;
-            }));
+            function(s, d, e) {
+                if (status == "ok") {
+                return d.app_id;
+                }
+                return null;
+            }
+        );
     }
 
     /** stub func */
