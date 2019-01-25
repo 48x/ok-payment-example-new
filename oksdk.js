@@ -808,7 +808,8 @@
             'application.getPublicInfo',
             {"application_api_key": getRequestParameters()["application_key"]},
             function(s, d, e) {
-                appId = d.app_id;
+                if (s == "ok") {
+                    appId = d.app_id;
                 }
             }
         );
