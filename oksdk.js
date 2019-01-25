@@ -802,16 +802,19 @@
     }
 
     function getCurrentAppId() {
-        OKSDK.REST.call(
+        console.log("1");
+        restCall(
             "application.getPublicInfo",
-            {"application_api_key": OKSDK.Util.getRequestParameters()["application_key"]},
+            {"application_api_key": getRequestParameters()["application_key"]},
             function (status, data, error) {
                 if (status == "ok") {
                     return data.app_id;
+                    console.log("2");
                 }
 
                 if (status == "error") {
                     console.log("Error: " + JSON.stringify(error));
+                    console.log("3");
                     return null;
                 }
             }
