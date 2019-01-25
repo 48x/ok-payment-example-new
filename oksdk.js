@@ -275,7 +275,7 @@
     /**
      * Opens a payment window for a selected product in an embedded iframe
      */
-    function paymentShowInFrame(productName, productPrice, productCode, options, frameId) {
+    function paymentShowInFrame(productName, productPrice, productCode, options, frameId, showHeader) {
         var frameElement =
         "<iframe 'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
         + getPaymentQuery(productName, productPrice, productCode, options)
@@ -287,8 +287,11 @@
             frameContainer.id = frameId;
             document.body.appendChild(frameContainer);
         }
-
-        frameContainer.innerHTML = frameElement;
+        var paymentHeader = "";
+        if (showHeader) {
+            paymentHeader += "<div>HEADER</div>"
+        }
+        frameContainer.innerHTML = paymentHeader + frameElement;
         frameContainer.style.display = "block";
         frameContainer.style.position = "fixed";
         frameContainer.style.left = "0px";
