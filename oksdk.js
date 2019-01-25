@@ -297,7 +297,8 @@
                 + state.mobServer
                 + '/app/'
                 + state.app_id
-                + '?custom_args=payment%3Dcancel"><div class="head_exit" style="position: absolute; top: 0; width: 42px; height: 42px; display: inline-block; cursor: pointer; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAQAAAD8x0bcAAAAiElEQVR4AWXQsQ2EQAwF0bn8pC2APiiAAiiDziiGGuiAiOASojltgqX9dugXWAPY3J3E3MndZice6tlZkFM9bLj4aLGB6OOCuFosySo4sCSCyQYimGwggskskgi3F21iono3gyR5MkiSNbslyW6QJBlJkuHsnaSYtzN2dg2k2OUsHwG+/Mh5L3/vKai39UeLngAAAABJRU5ErkJggg==) center center no-repeat; right: 0; z-index:1;"></div></a>';
+                + '?custom_args=payment%3Dcancel">'
+                + '<div class="head_exit" style="position: absolute; top: 0; width: 42px; height: 42px; display: inline-block; cursor: pointer; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAQAAAD8x0bcAAAAiElEQVR4AWXQsQ2EQAwF0bn8pC2APiiAAiiDziiGGuiAiOASojltgqX9dugXWAPY3J3E3MndZice6tlZkFM9bLj4aLGB6OOCuFosySo4sCSCyQYimGwggskskgi3F21iono3gyR5MkiSNbslyW6QJBlJkuHsnaSYtzN2dg2k2OUsHwG+/Mh5L3/vKai39UeLngAAAABJRU5ErkJggg==) center center no-repeat; right: 0; z-index:1;"></div></a>';
         }
         frameContainer.innerHTML = paymentHeader + frameElement;
         frameContainer.style.display = "block";
