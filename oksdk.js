@@ -809,6 +809,9 @@
             'application.getPublicInfo',
             {"application_api_key": getRequestParameters()["application_key"]},
             function(s, d, e) {
+                console.log(JSON.stringify(s));
+                console.log(JSON.stringify(d));
+                console.log(JSON.stringify(e));
                 if (status == "ok") {
                 return d.app_id;
                 }
