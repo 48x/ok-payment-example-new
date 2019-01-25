@@ -289,9 +289,13 @@
         }
         var paymentHeader = "";
         if (isLaunchedInOKAndroidWebView()) {
+            if (!state.app_id) {
+                getCurrentAppId();
+            }
+
             paymentHeader += '<div class="head_t" style="height: 42px; display: block; width: 100%; text-align: center; margin: 0; padding: 0; font-family: Arial,Helvetica,sans-serif; color: #fff; overflow: hidden; position: relative; background-color: #ed812b; z-index: 1;"></div><a id="ret" style="cursor: pointer; text-decoration: underline; font-size: medium;" href="'
                 + 'https://m.ok.ru/app/'
-                + getCurrentAppId()
+                + state.app_id
                 + '?custom_args=payment%3Dcancel"><div class="head_exit" style="position: absolute; top: 0; width: 42px; height: 42px; display: inline-block; cursor: pointer; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAQAAAD8x0bcAAAAiElEQVR4AWXQsQ2EQAwF0bn8pC2APiiAAiiDziiGGuiAiOASojltgqX9dugXWAPY3J3E3MndZice6tlZkFM9bLj4aLGB6OOCuFosySo4sCSCyQYimGwggskskgi3F21iono3gyR5MkiSNbslyW6QJBlJkuHsnaSYtzN2dg2k2OUsHwG+/Mh5L3/vKai39UeLngAAAABJRU5ErkJggg==) center center no-repeat; right: 0; z-index:1;"></div></a>';
         }
         frameContainer.innerHTML = paymentHeader + frameElement;
@@ -803,18 +807,15 @@
 
     function getCurrentAppId() {
         if (state.container || state.accessToken) return;
-        var appId;
         restCall(
             'application.getPublicInfo',
             {"application_api_key": getRequestParameters()["application_key"]},
             function(s, d, e) {
                 if (s == "ok") {
-                    appId = Object.assign({}, d.app_id);
+                    state.app_id = s.app_id;
                 }
             }
         );
-        console.log(appId);
-        return appId;
     }
 
     /** stub func */
