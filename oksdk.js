@@ -289,7 +289,7 @@
         }
         var paymentHeader = "";
         if (isLaunchedInOKAndroidWebView()) {
-            paymentHeader += '<div class="head_t" style="height: 42px; display: block; width: 100%; text-align: center; margin: 0; padding: 0; font-family: Arial,Helvetica,sans-serif; color: #fff; overflow: hidden; position: relative; background-color: #ed812b; z-index: 1;">Покупка в игре<div class="head_t_small"></div></div><a id="ret" href="https://m.ok.ru/app/okpaymentexample?custom_args=payment%3Dcancel"><div class="head_exit" style="position: absolute; top: 0; width: 42px; height: 42px; display: inline-block; cursor: pointer; background: url(/res/img/phone/ico_close_navbar.png) center center no-repeat;"></div></a>';
+            paymentHeader += '<div class="head_t" style="height: 42px; display: block; width: 100%; text-align: center; margin: 0; padding: 0; font-family: Arial,Helvetica,sans-serif; color: #fff; overflow: hidden; position: relative; background-color: #ed812b; z-index: 1;">Покупка в игре<div class="head_t_small"></div></div><a id="ret" style="cursor: pointer; text-decoration: underline; font-size: medium;" href="https://m.ok.ru/app/okpaymentexample?custom_args=payment%3Dcancel"><div class="head_exit" style="position: absolute; top: 0; width: 42px; height: 42px; display: inline-block; cursor: pointer; background: url(/res/img/phone/ico_close_navbar.png) center center no-repeat; right: 0;"></div></a>';
         }
         frameContainer.innerHTML = paymentHeader + frameElement;
         frameContainer.style.display = "block";
