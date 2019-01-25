@@ -864,5 +864,6 @@
         getRequestParameters: getRequestParameters,
         toString: toString,
         isLaunchedFromOKApp: isLaunchedInOKAndroidWebView
+        getAppId: getCurrentAppId
     }
 })));
