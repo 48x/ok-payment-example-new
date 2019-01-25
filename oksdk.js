@@ -275,7 +275,7 @@
     /**
      * Opens a payment window for a selected product in an embedded iframe
      */
-    function paymentShowInFrame(productName, productPrice, productCode, options, frameId, showHeader) {
+    function paymentShowInFrame(productName, productPrice, productCode, options, frameId) {
         var frameElement =
         "<iframe 'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
         + getPaymentQuery(productName, productPrice, productCode, options)
@@ -288,7 +288,7 @@
             document.body.appendChild(frameContainer);
         }
         var paymentHeader = "";
-        if (showHeader) {
+        if (isLaunchedInOKAndroidWebView) {
             paymentHeader += "<div>HEADER</div>"
         }
         frameContainer.innerHTML = paymentHeader + frameElement;
