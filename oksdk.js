@@ -289,7 +289,7 @@
         }
         var paymentHeader = "";
         if (isLaunchedInOKAndroidWebView()) {
-            paymentHeader += '<div class="head_t" style="height: 42px; display: block; width: 100%; text-align: center; margin: 0; padding: 0; font-family: Arial,Helvetica,sans-serif; color: #fff; overflow: hidden; position: relative; background-color: #ed812b; z-index: 1;">Покупка в игре<div class="head_t_small">На счёте 1603 OК</div><div class="head_t_small"></div></div><a id="ret" href="https://m.ok.ru/app/okpaymentexample?custom_args=payment%3Dcancel"><div class="head_exit"></div></a>';
+            paymentHeader += '<div class="head_t" style="height: 42px; display: block; width: 100%; text-align: center; margin: 0; padding: 0; font-family: Arial,Helvetica,sans-serif; color: #fff; overflow: hidden; position: relative; background-color: #ed812b; z-index: 1;">Покупка в игре<div class="head_t_small"></div></div><a id="ret" href="https://m.ok.ru/app/okpaymentexample?custom_args=payment%3Dcancel"><div class="head_exit"></div></a>';
         }
         frameContainer.innerHTML = paymentHeader + frameElement;
         frameContainer.style.display = "block";
