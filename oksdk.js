@@ -288,7 +288,7 @@
             document.body.appendChild(frameContainer);
         }
         var paymentHeader = "";
-        if (isLaunchedInOKAndroidWebView) {
+        if (isLaunchedInOKAndroidWebView()) {
             paymentHeader += "<div>HEADER</div>"
         }
         frameContainer.innerHTML = paymentHeader + frameElement;
