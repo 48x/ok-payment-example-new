@@ -805,7 +805,7 @@
         if (state.container || state.accessToken) return;
         restCall('application.getPublicInfo',
             {application_api_key: getRequestParameters()["application_key"]},
-            wrapCallback(onSuccess, null, function(data) {
+            wrapCallback(null, null, function(data) {
                 return data.app_id;
             }));
     }
