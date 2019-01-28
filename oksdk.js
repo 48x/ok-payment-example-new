@@ -2,7 +2,7 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
 	(factory((global.OKSDK = {})));
-}(this, (function (exports) {
+}(this, function (exports) {
     'use strict';
 
     var OK_CONNECT_URL = 'https://connect.ok.ru/';
@@ -37,7 +37,6 @@
 
     var sdk_success = nop;
     var sdk_failure = nop;
-    var rest_counter = 0;
 
     // ---------------------------------------------------------------------------------------------------
     // General
@@ -106,31 +105,19 @@
     // REST
     // ---------------------------------------------------------------------------------------------------
 
-    function restLoad(url) {
-        var script = document.createElement('script');
-        script.src = url;
-        script.async = true;
-        var done = false;
-        script.onload = script.onreadystatechange = function () {
-            if (!done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
-                done = true;
-                script.onload = null;
-                script.onreadystatechange = null;
-                if (script && script.parentNode) {
-                    script.parentNode.removeChild(script);
-                }
-            }
-        };
-        var headElem = document.getElementsByTagName('head')[0];
-        headElem.appendChild(script);
-    }
+    var REST_NO_SIGN_ARGS = ["sig", "access_token"];
 
-    function restCallPOST(query, callback) {
+    function executeRemoteRequest(query, usePost, callback) {
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", state.baseUrl, true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState ===  XMLHttpRequest.DONE) {
+        if (usePost) {
+            xhr.open("POST", state.baseUrl, true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        } else {
+            xhr.open("GET", state.baseUrl + "?" + query, true);
+            xhr.setRequestHeader("Content-type", "application/json");
+        }
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     if (isFunc(callback)) {
                         callback("ok", xhr.responseText, null);
@@ -142,7 +129,7 @@
                 }
             }
         };
-        xhr.send(query);
+        xhr.send(usePost ? query : null);
     }
 
     /**
@@ -156,7 +143,6 @@
      * @param {boolean} [callOpts.no_sig] true if no signature is required for the method
      * @param {string} [callOpts.app_secret_key] required for non-session requests
      * @param {string} [callOpts.use_post] send request via POST
-     * @returns {string}
      */
     function restCall(method, params, callback, callOpts) {
         params = params || {};
@@ -185,29 +171,12 @@
         var query = "";
         for (key in params) {
             if (params.hasOwnProperty(key)) {
-                if (query.length !== 0) {
-                    query += '&';
-                }
+                if (query.length !== 0) query += '&';
                 query += key + "=" + encodeURIComponent(params[key]);
             }
         }
 
-        if (callOpts && callOpts.use_post) {
-            return restCallPOST(query, callback);
-        }
-
-        var callbackId = "__oksdk__callback_" + (++rest_counter);
-        window[callbackId] = function (status, data, error) {
-            if (isFunc(callback)) {
-                callback(status, data, error);
-            }
-            window[callbackId] = null;
-            try {
-                delete window[callbackId];
-            } catch (e) {}
-        };
-        restLoad(state.baseUrl + '?' + query + "&js_callback=" + callbackId);
-        return callbackId;
+        return executeRemoteRequest(query, callOpts && callOpts.use_post, callback);
     }
 
     /**
@@ -230,7 +199,7 @@
         var sign = "";
         for (i = 0; i < keys.length; i++) {
             var key = keys[i];
-            if (("sig" != key) && ("access_token" != key)) {
+            if (REST_NO_SIGN_ARGS.indexOf(key) == -1) {
                 sign += keys[i] + '=' + query[keys[i]];
             }
         }
@@ -252,7 +221,7 @@
     }
 
     function wrapCallback(success, failure, dataProcessor) {
-        return function(status, data, error) {
+        return function (status, data, error) {
             if (status == 'ok') {
                 if (isFunc(success)) success(isFunc(dataProcessor) ? dataProcessor(data) : data);
             } else {
@@ -267,19 +236,32 @@
 
     /**
      * Opens a payment window for a selected product
+     *
+     * @param {String} productName      product's name to be displayed in a payment window
+     * @param {Number} productPrice     product's price to be displayed in a payment window
+     * @param {String} productCode      product's code used for validation in a server callback and displayed in transaction info
+     * @param {Object} options          additional payment parameters
      */
     function paymentShow(productName, productPrice, productCode, options) {
-       return window.open(getPaymentQuery(productName, productPrice, productCode, options));
+        return window.open(getPaymentQuery(productName, productPrice, productCode, options));
     }
 
     /**
      * Opens a payment window for a selected product in an embedded iframe
+     * Opens a payment window for a selected product as an embedded iframe
+     * You can either create frame container element by yourself or leave element creation for this method
+     *
+     * @param {String} productName      product's name to be displayed in a payment window
+     * @param {Number} productPrice     product's price to be displayed in a payment window
+     * @param {String} productCode      product's code used for validation in a server callback and displayed in transaction info
+     * @param {Object} options          additional payment parameters
+     * @param {String} frameId          id of a frame container element
      */
     function paymentShowInFrame(productName, productPrice, productCode, options, frameId) {
         var frameElement =
-        "<iframe 'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
-        + getPaymentQuery(productName, productPrice, productCode, options)
-        + "'; width='100%' height='100%' frameborder='0'></iframe>";
+            "<iframe 'style='position: absolute; left: 0px; top: 0px; background-color: white; z-index: 9999;' src='"
+            + getPaymentQuery(productName, productPrice, productCode, options)
+            + "'; width='100%' height='100%' frameborder='0'></iframe>";
 
         var frameContainer = window.document.getElementById(frameId);
         if (!frameContainer) {
@@ -287,20 +269,8 @@
             frameContainer.id = frameId;
             document.body.appendChild(frameContainer);
         }
-        var paymentHeader = "";
-        if (isLaunchedInOKAndroidWebView()) {
-            if (!state.app_id) {
-                getCurrentAppId();
-            }
 
-            paymentHeader += '<div class="head_t" style="height: 42px; display: block; width: 100%; text-align: center; margin: 0; padding: 0; font-family: Arial,Helvetica,sans-serif; color: #fff; overflow: hidden; position: relative; background-color: #ed812b; z-index: 1;"></div><a id="ret" style="cursor: pointer; text-decoration: underline; font-size: medium;" href="'
-                + state.mobServer
-                + '/app/'
-                + state.app_id
-                + '?custom_args=payment%3Dcancel">'
-                + '<div class="head_exit" style="position: absolute; top: 0; width: 42px; height: 42px; display: inline-block; cursor: pointer; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAQAAAD8x0bcAAAAiElEQVR4AWXQsQ2EQAwF0bn8pC2APiiAAiiDziiGGuiAiOASojltgqX9dugXWAPY3J3E3MndZice6tlZkFM9bLj4aLGB6OOCuFosySo4sCSCyQYimGwggskskgi3F21iono3gyR5MkiSNbslyW6QJBlJkuHsnaSYtzN2dg2k2OUsHwG+/Mh5L3/vKai39UeLngAAAABJRU5ErkJggg==) center center no-repeat; right: 0; z-index:1;"></div></a>';
-        }
-        frameContainer.innerHTML = paymentHeader + frameElement;
+        frameContainer.innerHTML = frameElement;
         frameContainer.style.display = "block";
         frameContainer.style.position = "fixed";
         frameContainer.style.left = "0px";
@@ -309,6 +279,12 @@
         frameContainer.style.height = "100%";
     }
 
+
+    /**
+     * Closes a payment window and hides it's container on game's page
+     *
+     * @param {String} frameId  id of a frame container element
+     */
     function closePaymentFrame(frameId) {
         if (window.parent) {
             var frameContainer = window.parent.document.getElementById(frameId);
@@ -325,7 +301,7 @@
     }
 
     /**
-     * Generates an OK payment service URL for a selected product
+     * Genrates an OK payment service URL for a selected product
      */
     function getPaymentQuery(productName, productPrice, productCode, options) {
         var params = {};
@@ -351,20 +327,7 @@
             }
         }
 
-       return query;
-    }
-
-    function getCurrentAppId() {
-        if (state.container || state.accessToken) return;
-        restCall(
-            'application.getPublicInfo',
-            {"application_api_key": getRequestParameters()["application_key"]},
-            function(s, d, e) {
-                if (s == "ok") {
-                    state.app_id = s.app_id;
-                }
-            }
-        );
+        return query;
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -432,10 +395,10 @@
     function removeAdsWidget() {
         if (ads_state.frame_element) {
             ads_state.frame_element.parentNode.removeChild(ads_state.frame_element);
-            ads_state = {
-                init: false,
-                ready: false
-            };
+            OKSDK.Ads.State.init = ads_state.init = false;
+            OKSDK.Ads.State.ready = ads_state.ready = false;
+            OKSDK.Ads.State.frame_element = ads_state.frame_element = null;
+            OKSDK.Ads.State.window_frame = ads_state.window_frame = null;
         }
     }
 
@@ -512,15 +475,17 @@
     /**
      * Returns HTML to be used as a back button for mobile app<br/>
      * If back button is required (like js app opened in browser from native mobile app) the required html
-     * will be returned in #onSucсess callback
+     * will be returned in #onSucсess callback<br/>
+     * Since 2019 it is no longer required for the app to use the widget
      * @param {onSuccessCallback} onSuccess
      * @param {String} [style]
+     * @deprecated
      */
     function widgetBackButton(onSuccess, style) {
         if (state.container || state.accessToken) return;
         restCall('widget.getWidgetContent',
             {wid: state.header_widget || 'mobile-header-small', style: style || null},
-            wrapCallback(onSuccess, null, function(data) {
+            wrapCallback(onSuccess, null, function (data) {
                 return decodeUtf8(atob(data))
             }));
     }
@@ -813,6 +778,7 @@
 
     /**
      * Checks if a game was opened in OK Android app's WebView
+     * Checks if a game is opened in an OK Android app's WebView
      */
     function isLaunchedInOKAndroidWebView() {
         var userAgent = window.navigator.userAgent;
@@ -820,9 +786,9 @@
         return (userAgent && userAgent.length >= 0 && userAgent.indexOf(OK_ANDROID_APP_UA) > -1);
     }
 
-
     /** stub func */
-    function nop() {}
+    function nop() {
+    }
 
     /**
      * @callback onSuccessCallback
@@ -876,4 +842,4 @@
         toString: toString,
         isLaunchedFromOKApp: isLaunchedInOKAndroidWebView
     }
-})));
+}));
