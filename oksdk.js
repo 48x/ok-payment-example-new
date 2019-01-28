@@ -114,14 +114,13 @@
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         } else {
             xhr.open("GET", state.baseUrl + "?" + query, true);
-            console.log(query);
             xhr.setRequestHeader("Content-type", "application/json");
         }
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     if (isFunc(callback)) {
-                        callback("ok", xhr.responseText, null);
+                        callback("ok", JSON.parse(xhr.responseText), null);
                     }
                 } else {
                     if (isFunc(callback)) {
