@@ -114,6 +114,7 @@
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         } else {
             xhr.open("GET", state.baseUrl + "?" + query, true);
+            console.log(query);
             xhr.setRequestHeader("Content-type", "application/json");
         }
         xhr.onreadystatechange = function () {
