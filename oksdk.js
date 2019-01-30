@@ -71,8 +71,8 @@
         state.accessToken = hParams['access_token'];
         state.sessionSecretKey = params["session_secret_key"] || hParams['session_secret_key'];
         state.apiServer = args["api_server"] || params["api_server"] || OK_API_SERVER;
-        state.widgetServer = args["widget_server"] || params['widget_server'] || OK_CONNECT_URL;
-        state.mobServer = args["mob_server"] || params["mob_server"] || OK_MOB_URL;
+        state.widgetServer = getRemoteUrl([args["widget_server"], params['widget_server']], OK_CONNECT_URL);
+        state.mobServer = getRemoteUrl([args["mob_server"], params["mob_server"]], OK_MOB_URL);
         state.baseUrl = state.apiServer + "fb.do";
         state.header_widget = params['header_widget'];
         state.container = params['container'];
@@ -99,6 +99,17 @@
             }
         }
         sdk_success();
+    }
+
+    /**
+     * @param {Array} sources
+     * @param {String} fallback
+     */
+    function getRemoteUrl(sources, fallback) {
+        for (var source of sources) {
+            if (source && (source.startsWith("http://") || source.startsWith("https://"))) return source;
+        }
+        return fallback;
     }
 
     // ---------------------------------------------------------------------------------------------------
@@ -264,17 +275,7 @@
             document.body.appendChild(frameContainer);
         }
 
-        var paymentHeader = "";
-        if (isLaunchedInOKAndroidWebView() && state.app_id) {
-            paymentHeader += '<div class="head_t" style="height: 42px; display: block; width: 100%; text-align: center; margin: 0; padding: 0; font-family: Arial,Helvetica,sans-serif; color: #fff; overflow: hidden; position: relative; background-color: #ed812b; z-index: 1;"></div><a id="ret" style="cursor: pointer; text-decoration: underline; font-size: medium;" href="'
-                + state.mobServer
-                + '/app/'
-                + state.app_id
-                + '?custom_args=payment%3Dcancel">'
-                + '<div class="head_exit" style="position: absolute; top: 0; width: 42px; height: 42px; display: inline-block; cursor: pointer; background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAQAAAD8x0bcAAAAiElEQVR4AWXQsQ2EQAwF0bn8pC2APiiAAiiDziiGGuiAiOASojltgqX9dugXWAPY3J3E3MndZice6tlZkFM9bLj4aLGB6OOCuFosySo4sCSCyQYimGwggskskgi3F21iono3gyR5MkiSNbslyW6QJBlJkuHsnaSYtzN2dg2k2OUsHwG+/Mh5L3/vKai39UeLngAAAABJRU5ErkJggg==) center center no-repeat; right: 0; z-index:1;"></div></a>';
-        }
-
-        frameContainer.innerHTML = paymentHeader + frameElement;
+        frameContainer.innerHTML = frameElement;
         frameContainer.style.display = "block";
         frameContainer.style.position = "fixed";
         frameContainer.style.left = "0px";
