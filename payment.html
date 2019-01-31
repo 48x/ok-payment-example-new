@@ -79,7 +79,7 @@
                 }
 
                     // Post a message {type:"payment",result:"..."}
-                    target.postMessage(JSON.stringify({
+                    window.opener.postMessage(JSON.stringify({
                         type: 'payment',
                         result: paymentResult,
                         fromAndroid: OKSDK.Util.isLaunchedFromOKApp()
