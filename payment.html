@@ -111,7 +111,7 @@
 
         var result;
         try {
-            result = processLegacyPayment();
+            result = processLegacyPayment(event);
         } catch (e) {
             result = processNewPayment(event);
         }
