@@ -74,7 +74,8 @@
 
             }
 
-            if (var target = window.opener) {
+            if (window.opener) {
+                var target = window.opener;
                 if (target.frames) {
                     target = target.frames[0];
                 }
