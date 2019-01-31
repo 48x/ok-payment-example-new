@@ -70,8 +70,6 @@
                         result: paymentResult,
                         fromAndroid: OKSDK.Util.isLaunchedFromOKApp()
                     }), "*");
-                <!--OKSDK.Payment.closePaymentFrame("paymentFrame");-->
-
             }
 
             if (window.opener) {
@@ -97,6 +95,7 @@
     // to communicate with the opened window
     window.addEventListener('message', function (event) {
         console.log(event);
+                        OKSDK.Payment.closePaymentFrame("paymentFrame");
         var data = JSON.parse(event.data || "");
 
         // Receive a message {type:"payment",result:"..."}
