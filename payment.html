@@ -96,7 +96,7 @@
     // Since we are using separate window when opening a payment, we should send/receive messages
     // to communicate with the opened window
     window.addEventListener('message', function (event) {
-        console.log(event.data);
+        console.log(JSON.stringify(event));
         var data = JSON.parse(event.data || "");
 
         // Receive a message {type:"payment",result:"..."}
