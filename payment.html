@@ -109,7 +109,7 @@
     window.addEventListener('message', function (event) {
         OKSDK.Payment.closePaymentFrame("paymentFrame");
 
-        var rawResult;
+        var result;
         try {
             result = processLegacyPayment();
         } catch (e) {
