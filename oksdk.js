@@ -292,7 +292,12 @@
      */
     function closePaymentFrame(frameId) {
         if (window.parent) {
-            var frameContainer = window.document.getElementById(frameId) || window.parent.document.getElementById(frameId);
+            var frameContainer
+            try {
+               frameContainer = window.document.getElementById(frameId) || window.parent.document.getElementById(frameId);
+            } catch (e) {
+                console.log(e);
+            }
 
             if (frameContainer) {
                 frameContainer.innerHTML = "";
