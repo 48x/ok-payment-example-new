@@ -293,7 +293,7 @@
     function closePaymentFrame(frameId) {
         if (window.parent) {
             var frameContainer;
-            console.log(window.parent.location.origin);
+//            console.log(window.parent.location.origin);
             if (window.parent.location.origin == state.mobServer){
                 frameContainer = window.document.getElementById(frameId);
             } else {
