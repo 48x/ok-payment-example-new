@@ -293,8 +293,8 @@
     function closePaymentFrame(frameId) {
         if (window.parent) {
             var frameContainer;
-            console.log(window.parent.location);
-            if (window.parent.location.contains(state.mobServer)){
+            console.log(window.parent.location.origin);
+            if (window.parent.location.origin == state.mobServer){
                 frameContainer = window.document.getElementById(frameId);
             } else {
                 frameContainer = window.parent.document.getElementById(frameId);
