@@ -119,7 +119,7 @@
 
         if (result.type == 'payment') {
             let paymentResult = result.result;
-            let fromAndroid = result.fromAndroid;
+            let fromAndroid = result.fromAndroid || OKSDK.Util.isLaunchedFromOKApp();
             alert('Payment returned result: ' + JSON.stringify(paymentResult) + '\n' + 'From android: ' + fromAndroid);
         }
     }, false);
