@@ -74,9 +74,13 @@
 
             }
 
-            if (window.opener) {
+            if (var target = window.opener) {
+                if (target.frames) {
+                    target = target.frames[0];
+                }
+
                     // Post a message {type:"payment",result:"..."}
-                    window.opener.postMessage(JSON.stringify({
+                    target.postMessage(JSON.stringify({
                         type: 'payment',
                         result: paymentResult,
                         fromAndroid: OKSDK.Util.isLaunchedFromOKApp()
