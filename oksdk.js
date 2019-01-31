@@ -292,7 +292,13 @@
      */
     function closePaymentFrame(frameId) {
         if (window.parent) {
-            var frameContainer = window.document.getElementById(frameId);
+            var frameContainer;
+            if (window.parent.location.contains(state.mobServer)){
+                frameContainer = window.document.getElementById(frameId);
+            } else {
+                frameContainer = window.parent.document.getElementById(frameId);
+            }
+
             if (frameContainer) {
                 frameContainer.innerHTML = "";
                 frameContainer.style.display = "none";
