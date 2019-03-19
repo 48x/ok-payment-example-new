@@ -321,7 +321,7 @@
         params['price'] = productPrice;
         params['description'] = productPrice;
         params['code'] = productCode;
-        params['attributes'] = JSON.stringify({"test_attr": "test_value"});
+        params['extra_attributes'] = "hop_hey_la_la_ley";
 
         options = options || {};
         var host = options['mob_pay_url'] || state.mobServer;
