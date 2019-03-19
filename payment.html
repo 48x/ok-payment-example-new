@@ -95,6 +95,7 @@
     }
 
     function processNewPayment(event) {
+       console.log(event.data);
        switch (event.data) {
             case "payment=ok":
                 return {"type": "payment", "result": "ok"};

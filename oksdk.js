@@ -334,7 +334,7 @@
         }
         params['sig'] = calcSignature(params, state.sessionSecretKey);
 
-        var query = host + 'api/show_payment?';
+            var query = host + 'api/show_payment?';
         for (var key in params) {
             if (params.hasOwnProperty(key)) {
                 query += key + "=" + encodeURIComponent(params[key]) + "&";
