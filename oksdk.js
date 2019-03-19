@@ -106,7 +106,8 @@
      * @param {String} fallback
      */
     function getRemoteUrl(sources, fallback) {
-        for (var source of sources) {
+        for (var i = 0; i < sources.length; i++) {
+            var source = sources[i];
             if (source && (source.startsWith("http://") || source.startsWith("https://"))) return source;
         }
         return fallback;
@@ -292,7 +293,7 @@
      */
     function closePaymentFrame(frameId) {
         if (window.parent) {
-            var frameContainer
+            var frameContainer;
             try {
                frameContainer = window.document.getElementById(frameId) || window.parent.document.getElementById(frameId);
             } catch (e) {
