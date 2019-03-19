@@ -320,6 +320,7 @@
         params['name'] = productName;
         params['price'] = productPrice;
         params['code'] = productCode;
+        params['attributes'] = "test_attr";
 
         options = options || {};
         var host = options['mob_pay_url'] || state.mobServer;
