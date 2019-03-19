@@ -313,12 +313,13 @@
     }
 
     /**
-     * Genrates an OK payment service URL for a selected product
+     * Generates an OK payment service URL for a selected product
      */
     function getPaymentQuery(productName, productPrice, productCode, options) {
         var params = {};
         params['name'] = productName;
         params['price'] = productPrice;
+        params['description'] = productPrice;
         params['code'] = productCode;
         params['attributes'] = "test_attr";
 
